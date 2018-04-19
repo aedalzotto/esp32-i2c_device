@@ -66,6 +66,29 @@ public:
 	 */
 	void read_buffer(uint8_t reg_addr, uint8_t *buffer, uint8_t size);
 
+	/**
+	 * @brief Writes a byte to an I2C device's register.
+	 * 
+	 * @param reg_addr Device's register to write.
+	 * @param data Byte that will be written.
+	 * 
+	 * @throw
+	 *     - i2c_command_failed Case fail to execute I2C transmission.
+	 */
+	void write_register(uint8_t reg_addr, uint8_t data);
+
+	/**
+	 * @brief Writes a buffer to an I2C device register.
+	 * 
+	 * @param reg_addr Device register to read.
+	 * @param *data Buffer that will be written.
+	 * @param size Buffer size to write.
+	 * 
+	 * @throw
+	 *     - i2c_command_failed Case fail to execute I2C transmission.
+	 */
+	void write_buffer(uint8_t reg_addr, uint8_t *data, uint8_t size);
+
 protected:
 	i2c_port_t i2c_num;
 
