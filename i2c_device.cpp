@@ -88,3 +88,24 @@ void I2CDevice::write_buffer(uint8_t reg_addr, uint8_t *data, uint8_t size)
     if(ret != ESP_OK)
         throw I2CExcept::CommandFailed();
 }
+
+void I2CDevice::modify_register(uint8_t reg_addr, uint8_t and_mask, uint8_t or_mask)
+{
+    esp_err_t ret;
+    uint8_t reg;
+
+    try{
+        reg = read_register(reg_addr);
+    } catch(...){
+        throw;
+    }
+
+    reg &= and_mask;
+    reg |= or_mask;
+
+    try {
+        write_register(reg_addr, reg);
+    } catch(...){
+        throw;
+    }
+}
