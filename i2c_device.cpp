@@ -52,24 +52,18 @@ void I2CDevice::read_buffer(uint8_t reg_addr, uint8_t *buffer, uint8_t size)
     i2c_master_stop(cmd);
     esp_err_t ret = i2c_master_cmd_begin(i2c_num, cmd, 1000/portTICK_RATE_MS);
     i2c_cmd_link_delete(cmd);
-    return ret;
+    
+    if(ret != ESP_OK)
+        throw I2CExcept::CommandFailed();
 }
 
 void I2CDevice::write_register(uint8_t reg_addr, uint8_t data)
 {
-    i2c_cmd_handle_t cmd = i2c_cmd_link_create();
-    i2c_master_start(cmd);
-    i2c_master_write_byte(cmd, (dev_addr << 1) | I2C_MASTER_WRITE, true);
-    i2c_master_write_byte(cmd, reg_addr, true);
-
-    i2c_master_write_byte(cmd, data, I2C_MASTER_NACK);
-
-    i2c_master_stop(cmd);
-    esp_err_t ret = i2c_master_cmd_begin(i2c_num, cmd, 1000/portTICK_RATE_MS);
-    i2c_cmd_link_delete(cmd);
-
-    if(ret != ESP_OK)
-        throw I2CExcept::CommandFailed();
+    try {
+        write_buffer(reg_addr, &data, 1);
+    } catch(...){
+        throw;
+    }
 }
 
 void I2CDevice::write_buffer(uint8_t reg_addr, uint8_t *data, uint8_t size)

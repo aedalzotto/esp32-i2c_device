@@ -60,7 +60,6 @@ public:
 	void read_buffer(uint8_t reg_addr, uint8_t *buffer, uint8_t size);
 
 	/**
-<<<<<<< HEAD
 	 * @brief Writes a byte to an I2C device's register.
 	 * 
 	 * @param reg_addr Device's register to write.
@@ -82,7 +81,8 @@ public:
 	 *     - i2c_command_failed Case fail to execute I2C transmission.
 	 */
 	void write_buffer(uint8_t reg_addr, uint8_t *data, uint8_t size);
-=======
+
+	/**
 	 * @brief Modify a I2C Device register.
 	 * 
 	 * @details Reads a register and the masks it to write back to device.
@@ -95,7 +95,6 @@ public:
 	 *     - I2CExcept::CommandFailed Case fail to execute I2C transmission.
 	 */
 	void modify_register(uint8_t reg_addr, uint8_t and_mask, uint8_t or_mask);
->>>>>>> f0c9f2a31e9a8694cc5e1b4c74cef3b9217b3b14
 
 protected:
 	i2c_port_t i2c_num;
