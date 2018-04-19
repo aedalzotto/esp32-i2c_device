@@ -21,10 +21,17 @@
 
 #include <exception>
 
-class i2c_command_failed : public std::exception {
-    const char *what() const throw() {
-        return "Failed to execute I2C communication command";
-    }
-};
+namespace I2CExcept {
+	class CommandFailed : public std::exception {
+    	const char *what() const throw() {
+        	return "Failed to execute I2C communication command";
+    	}
+	};
+    class BufferSize : public std::exception {
+        const char *what() const throw() {
+        	return "Invalid buffer size passed to function";
+    	}
+    };
+}
 
 #endif

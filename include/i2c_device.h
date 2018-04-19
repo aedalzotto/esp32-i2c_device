@@ -24,6 +24,14 @@
 
 #include "i2c_exceptions.h"
 
+namespace I2CExcept {
+	class CommandFailed : public std::exception {
+    	const char *what() const throw() {
+        	return "Failed to execute I2C communication command";
+    	}
+	};
+}
+
 class I2CDevice {
 public:
 	/**
@@ -45,6 +53,18 @@ public:
 	 *     - i2c_command_failed Case fail to execute I2C transmission.
 	 */
 	uint8_t read_register(uint8_t reg_addr);
+
+	/**
+	 * @brief Reads a buffer from I2C device.
+	 * 
+	 * @param reg_addr Device register to read.
+	 * @param *buffer Pointer to destination buffer.
+	 * @param size Size of the buffer in bytes.
+	 * 
+	 * @throw
+	 *     - i2c_command_failed Case fail to execute I2C transmission.
+	 */
+	void read_buffer(uint8_t reg_addr, uint8_t *buffer, uint8_t size);
 
 protected:
 	i2c_port_t i2c_num;
