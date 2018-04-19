@@ -24,14 +24,6 @@
 
 #include "i2c_exceptions.h"
 
-namespace I2CExcept {
-	class CommandFailed : public std::exception {
-    	const char *what() const throw() {
-        	return "Failed to execute I2C communication command";
-    	}
-	};
-}
-
 class I2CDevice {
 public:
 	/**
@@ -50,7 +42,7 @@ public:
 	 * @return Byte read from register.
 	 * 
 	 * @throw
-	 *     - i2c_command_failed Case fail to execute I2C transmission.
+	 *     - I2CExcept::CommandFailed Case fail to execute I2C transmission.
 	 */
 	uint8_t read_register(uint8_t reg_addr);
 
@@ -62,9 +54,24 @@ public:
 	 * @param size Size of the buffer in bytes.
 	 * 
 	 * @throw
-	 *     - i2c_command_failed Case fail to execute I2C transmission.
+	 *     - I2CExcept::BufferSize Case "size" param is 0.
+	 *     - I2CExcept::CommandFailed Case fail to execute I2C transmission.
 	 */
 	void read_buffer(uint8_t reg_addr, uint8_t *buffer, uint8_t size);
+
+	/**
+	 * @brief Modify a I2C Device register.
+	 * 
+	 * @details Reads a register and the masks it to write back to device.
+	 * 
+	 * @param reg_addr Device register to modify.
+	 * @param and_mask AND mask to be applied to register (bits 0 to disable).
+	 * @param or_mark OR mask to be applied AFTER AND. (bits 1 to enable)
+	 * 
+	 * @throw
+	 *     - I2CExcept::CommandFailed Case fail to execute I2C transmission.
+	 */
+	void modify_register(uint8_t reg_addr, uint8_t and_mask, uint8_t or_mask);
 
 protected:
 	i2c_port_t i2c_num;
