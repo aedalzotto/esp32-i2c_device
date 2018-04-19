@@ -57,13 +57,14 @@ void I2CDevice::read_buffer(uint8_t reg_addr, uint8_t *buffer, uint8_t size)
     i2c_master_write_byte(cmd, (dev_addr << 1) | I2C_MASTER_READ, true);
 
     if(size > 1)
-        i2c_master_read(cmd, data, size-1, 0); //0 is ACK
+        i2c_master_read(cmd, buffer, size-1, I2C_MASTER_ACK);
 
-    i2c_master_read_byte(cmd, data+size-1, 1); //1 is NACK
+    i2c_master_read_byte(cmd, buffer+size-1, I2C_MASTER_NACK);
 
     i2c_master_stop(cmd);
     esp_err_t ret = i2c_master_cmd_begin(i2c_num, cmd, 1000/portTICK_RATE_MS);
     i2c_cmd_link_delete(cmd);
+<<<<<<< HEAD
     return ret;
 }
 
@@ -80,10 +81,13 @@ void I2CDevice::write_register(uint8_t reg_addr, uint8_t data)
     esp_err_t ret = i2c_master_cmd_begin(i2c_num, cmd, 1000/portTICK_RATE_MS);
     i2c_cmd_link_delete(cmd);
 
+=======
+>>>>>>> f0c9f2a31e9a8694cc5e1b4c74cef3b9217b3b14
     if(ret != ESP_OK)
         throw I2CExcept::CommandFailed();
 }
 
+<<<<<<< HEAD
 void I2CDevice::write_buffer(uint8_t reg_addr, uint8_t *data, uint8_t size)
 {
     if(!size)
@@ -105,4 +109,25 @@ void I2CDevice::write_buffer(uint8_t reg_addr, uint8_t *data, uint8_t size)
 
     if(ret != ESP_OK)
         throw I2CExcept::CommandFailed();
+=======
+void I2CDevice::modify_register(uint8_t reg_addr, uint8_t and_mask, uint8_t or_mask)
+{
+    esp_err_t ret;
+	uint8_t reg;
+
+    try{
+	    reg = read_register(reg_addr);
+    } catch(...){
+        throw;
+    }
+
+	reg &= and_mask;
+    reg |= or_mask;
+
+	try {
+        write_register(reg_addr, reg);
+    } catch(...){
+        throw;
+    }
+>>>>>>> f0c9f2a31e9a8694cc5e1b4c74cef3b9217b3b14
 }
