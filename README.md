@@ -8,13 +8,11 @@ You need to clone this project and it's dependency to your project's components 
 Inside you project folder:
 ```
 mkdir -p components && cd components
-git clone https://github.com/aedalzotto/esp32-max30100-cpp.git
 git clone https://github.com/aedalzotto/esp32-i2c_device-cpp.git
 ```
 If you prefer you can use submodule instead of cloning:
 ```
 mkdir -p components && cd components
-git submodule add https://github.com/aedalzotto/esp32-max30100-cpp.git
 git submodule add https://github.com/aedalzotto/esp32-i2c_device-cpp.git
 ```
 
