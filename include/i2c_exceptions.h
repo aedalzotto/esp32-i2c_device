@@ -15,7 +15,7 @@
 #ifndef I2C_DEVICE_EXCEPTIONS_H_
 #define I2C_DEVICE_EXCEPTIONS_H_
 
-#if CONFIG_CXX_EXCEPTIONS != 1
+#ifndef __EXCEPTIONS
 #error "C++ exception handling must be enabled within make menuconfig. See Compiler Options > Enable C++ Exceptions."
 #endif
 
@@ -23,12 +23,14 @@
 
 namespace I2CExcept {
 	class CommandFailed : public std::exception {
-    	const char *what() const throw() {
+		public:
+    	const char* what() const noexcept {
         	return "Failed to execute I2C communication command";
     	}
 	};
     class BufferSize : public std::exception {
-        const char *what() const throw() {
+		public:
+        const char* what() const noexcept {
         	return "Invalid buffer size passed to function";
     	}
     };

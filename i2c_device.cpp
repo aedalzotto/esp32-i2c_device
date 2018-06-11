@@ -14,7 +14,7 @@
 
 #include "i2c_device.h"
 
-I2CDevice::I2CDevice(uint8_t dev_addr, i2c_port_t i2c_num = I2C_NUM_0)
+I2CDevice::I2CDevice(uint8_t dev_addr, i2c_port_t i2c_num)
 {
     this->dev_addr = dev_addr;
     this->i2c_num = i2c_num;
@@ -91,7 +91,6 @@ void I2CDevice::write_buffer(uint8_t reg_addr, uint8_t *data, uint8_t size)
 
 void I2CDevice::modify_register(uint8_t reg_addr, uint8_t and_mask, uint8_t or_mask)
 {
-    esp_err_t ret;
     uint8_t reg;
 
     try{

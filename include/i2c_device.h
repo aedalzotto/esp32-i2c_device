@@ -15,7 +15,7 @@
 #ifndef I2C_DEVICE_H
 #define I2C_DEVICE_H
 
-#if CONFIG_CXX_EXCEPTIONS != 1
+#ifndef __EXCEPTIONS
 #error "C++ exception handling must be enabled within make menuconfig. See Compiler Options > Enable C++ Exceptions."
 #endif
 
